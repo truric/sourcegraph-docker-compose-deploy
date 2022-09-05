@@ -745,6 +745,10 @@ services:
 volumes:
   caddy:
   gitserver-0:
+  container_name: gitserver-0
+  volumes:
+    - 'gitserver-0:/data/repos'
+    - '~/path/on/host/.ssh:/home/sourcegraph/.ssh'
   grafana:
   pgsql:
   codeintel-db:
@@ -757,8 +761,16 @@ volumes:
   worker:
   searcher-0:
   sourcegraph-frontend-0:
+    container_name: sourcegraph-frontend-0
+    ports:
+       - '0.0.0.0:6060:6060'
   sourcegraph-frontend-internal-0:
   symbols-0:
   zoekt-0-shared:
 networks:
   sourcegraph:
+
+jaeger:
+  container_name: jaeger
+  environment:
+    - 'SAMPLING_STRATEGIES_FILE=/etc/jaeger/sampling_strategies.json'
